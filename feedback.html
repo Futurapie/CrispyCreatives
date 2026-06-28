@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Feedback - CrispyCreatives</title>
+    <link rel="stylesheet" href="feedback.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="Biut.mp4" type="video/mp4">
+  </video>
+
+  <div class="form-page">
+    <h2>FEEDBACK</h2>
+    <form id="feedbackForm" action="https://formspree.io/f/mbdvowqe" method="POST">
+      <label>Name</label>
+      <input type="text" name="name" placeholder="Your Name" required>
+
+      <label>Brand Name</label>
+      <input type="text" name="brand" placeholder="Your Brand Name" required>
+
+      <label>Feedback</label>
+      <textarea name="feedback" placeholder="Tell us how it was working with us" rows="5" required></textarea>
+
+      <button type="submit" class="btn-submit">Send</button>
+    </form>
+    <p id="thankYouMsg" class="thank-you-msg">Thank You Your Feedback!<br>We Appreciate You Taking The Time.</p>
+    <a href="index.html" class="btn-main-menu" id="mainMenuBtn">Back to Main Menu</a>
+  </div>
+
+  <script>
+    const feedbackForm = document.getElementById('feedbackForm');
+    const thankYouMsg = document.getElementById('thankYouMsg');
+    const mainMenuBtn = document.getElementById('mainMenuBtn');
+    const nameInput = feedbackForm.querySelector('input[name="name"]');
+
+    feedbackForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = nameInput.value;
+
+      const formData = new FormData(feedbackForm);
+
+      fetch(feedbackForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(() => {
+        thankYouMsg.innerHTML = `Thank You For Your Feedback ${name}!<br>It Means The World To Us!`;
+        feedbackForm.style.display = 'none';
+        thankYouMsg.style.display = 'block';
+        mainMenuBtn.style.display = 'block';
+      }).catch(() => {
+        thankYouMsg.innerHTML = `Something went wrong, ${name}. Please try again or email us directly.`;
+        feedbackForm.style.display = 'none';
+        thankYouMsg.style.display = 'block';
+        mainMenuBtn.style.display = 'block';
+      });
+    });
+  </script>
+
+</body>
+</html>

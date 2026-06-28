@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact - CrispyCreatives</title>
+    <link rel="stylesheet" href="contact.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="Biut.mp4" type="video/mp4">
+  </video>
+
+  <div class="form-page">
+    <h2>MINI PROPOSAL</h2>
+    <form id="campaignForm" action="https://formspree.io/f/xkolrjdr" method="POST">
+      <label>First Name</label>
+      <input type="text" name="first_name" placeholder="Your First Name" required>
+
+      <label>Last Name <span class="optional">(optional)</span></label>
+      <input type="text" name="last_name" placeholder="Your Last Name">
+
+      <label>Brand You Work For</label>
+      <input type="text" name="brand" placeholder="Brand Name" required>
+
+      <label>Email</label>
+      <input type="email" name="email" placeholder="Your Email" required>
+
+      <label>Campaign Plans</label>
+      <textarea name="campaign_plans" placeholder="Tell us about your campaign plans" rows="5" required></textarea>
+
+      <button type="submit" class="btn-submit">Send</button>
+    </form>
+    <p id="thankYouMsg" class="thank-you-msg">Thank You For The Mini Request!<br>Our Staff Will Give You A Reply As Soon Possible.</p>
+    <a href="index.html" class="btn-main-menu" id="mainMenuBtn">Back to Main Menu</a>
+  </div>
+
+  <script>
+    const campaignForm = document.getElementById('campaignForm');
+    const thankYouMsg = document.getElementById('thankYouMsg');
+    const mainMenuBtn = document.getElementById('mainMenuBtn');
+    const firstNameInput = campaignForm.querySelector('input[name="first_name"]');
+
+    campaignForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = firstNameInput.value;
+
+      const formData = new FormData(campaignForm);
+
+      fetch(campaignForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      }).then(() => {
+        thankYouMsg.innerHTML = `Thank you ${name}! <br>Our team will connect to you very soon. <br>Can't wait to dive into this together!`;
+        campaignForm.style.display = 'none';
+        thankYouMsg.style.display = 'block';
+        mainMenuBtn.style.display = 'block';
+      }).catch(() => {
+        thankYouMsg.innerHTML = `Something went wrong, ${name}. Please try again or email us directly.`;
+        campaignForm.style.display = 'none';
+        thankYouMsg.style.display = 'block';
+        mainMenuBtn.style.display = 'block';
+      });
+    });
+  </script>
+
+</body>
+</html>
